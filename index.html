@@ -8,6 +8,149 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="none" stroke="#A6432D" stroke-width="2"/><circle cx="20" cy="20" r="4" fill="#C48A2E"/><g stroke="#2B4A42" stroke-width="1.6"><line x1="20" y1="2" x2="20" y2="10"/><line x1="20" y1="30" x2="20" y2="38"/><line x1="2" y1="20" x2="10" y2="20"/><line x1="30" y1="20" x2="38" y2="20"/></g></svg>
+      Indian Art Record
+    </div>
+    <button class="hamburger" id="hamBtn" aria-label="Menu">☰</button>
+    <nav class="navlinks" id="navlinks">
+      <button data-page="home">Home</button>
+      <button data-page="timeline">Interactive Timeline</button>
+      <button data-page="map">Interactive Map</button>
+      <button data-page="fusion">Regional Fusion</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- HOME -->
+<section class="page" id="page-home">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">INDIAN ART HISTORY &nbsp;·&nbsp; INTERACTIVE PROJECT</p>
+      <h1 style="font-size:clamp(2.4rem,4.5vw,3rem);">A journey through<br>time, place &amp; style.</h1>
+
+      <p class="lede" style="font-size:.95rem; max-width:55ch; margin-bottom:28px;">Looking at art. Connecting places. Bringing styles together. Explore an interactive record of how Indian art has moved across centuries and regions.</p>
+      <div class="hero-cta">
+        <a class="btn" onclick="showPage('timeline')">Explore the timeline</a>
+        <a class="btn ghost" onclick="showPage('map')">Open the map</a>
+      </div>
+    </div>
+    <svg class="motif" viewBox="0 0 300 300"><circle cx="150" cy="150" r="130" fill="none" stroke="#C48A2E" stroke-width="1.5" opacity=".5"/><circle cx="150" cy="150" r="95" fill="none" stroke="#A6432D" stroke-width="1.5" opacity=".5"/><g fill="#2B4A42"><circle cx="150" cy="55" r="6"/><circle cx="150" cy="245" r="6"/><circle cx="55" cy="150" r="6"/><circle cx="245" cy="150" r="6"/></g><g stroke="#2B4A42" stroke-width="2" fill="none" opacity=".7"><path d="M150 90 L170 150 L150 210 L130 150 Z"/><path d="M90 150 L150 130 L210 150 L150 170 Z"/></g><circle cx="150" cy="150" r="14" fill="#A6432D"/></svg>
+  </div>
+
+  <div class="cards3">
+    <div class="jcard" onclick="showPage('timeline')"><span class="num">01</span><h3>Interactive Timeline</h3><p>An interactive digital timeline featuring virtual replicas of key artifacts from different periods of Indian art.</p><span class="go">View timeline →</span></div>
+    <div class="jcard" onclick="showPage('map')"><span class="num">02</span><h3>Interactive Art Map</h3><p>An interactive digital map highlighting key locations significant to Indian art history and local art movements.</p><span class="go">Open map →</span></div>
+    <div class="jcard" onclick="showPage('fusion')"><span class="num">03</span><h3>Regional Painting Fusion</h3><p>A fusion artwork conceptually combining the geometric patterns of Warli art with detailed Kalamkari motifs.</p><span class="go">See the artwork →</span></div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="about-strip">
+    <div class="stat"><b>6</b><span>Art traditions on the timeline</span></div>
+    <div class="stat"><b>8</b><span>Locations on the map</span></div>
+    <div class="stat"><b>c. 2600 BCE</b><span>Earliest period covered</span></div>
+    <div class="stat"><b>1</b><span>Original fusion artwork</span></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="page" id="page-timeline">
+  <div class="section-pad">
+    <p class="eyebrow">Timeline</p>
+    <h2 style="font-size:2.2rem;margin:6px 0 8px;">Interactive Indian Art Timeline</h2>
+    <p class="kicker" style="max-width:60ch;">Choose an era below to see its period, region, characteristics and representative artworks.</p>
+  </div>
+
+  <div class="tl-tabs" id="tlTabs"></div>
+  <div class="tl-rail" id="tlRail"><div class="fill" id="tlFill"></div></div>
+
+  <div id="eraContent"></div>
+</section>
+
+<!-- MAP -->
+<section class="page" id="page-map">
+  <div class="section-pad">
+    <p class="eyebrow">Geographic Map</p>
+    <h2 style="font-size:2.2rem;margin:6px 0 8px;">Interactive Indian Art Map</h2>
+    <p class="kicker" style="max-width:64ch;">Eight places associated with major Indian art traditions. Select a place in the list or a marker on the map to explore its details.</p>
+  </div>
+  <div class="map-wrap">
+    <div class="map-panel" id="locList"></div>
+    <div id="leafmap"></div>
+  </div>
+  <div class="geo-note">A place's <b>geographic marker</b> shows where a tradition was practised or originated; this can differ from where an individual artefact is exhibited today. Boundaries shown are generalised for present-day geographic reference only.</div>
+</section>
+
+<!-- FUSION -->
+<section class="page" id="page-fusion">
+  <div class="section-pad">
+    <p class="eyebrow">Creative Fusion</p>
+    <h2 style="font-size:2.2rem;margin:6px 0 4px;">Regional Painting Fusion</h2>
+    <span class="badge">Contemporary digital fusion — not an authentic traditional artwork</span>
+    <p class="kicker" style="max-width:64ch;margin-top:10px;">An original composition bringing Warli figuration and Kalamkari botanical detail into a single integrated scene, inspired by — but not a copy of — either tradition.</p>
+  </div>
+
+  <div class="fusion-hero">
+    <div class="fusion-art" id="fusionArtHolder"></div>
+    <p class="fusion-label">"Circle Under the Vine" — Warli figures and Kalamkari-inspired botanical linework, integrated into one composition. Original digital illustration.</p>
+  </div>
+
+  <div class="fusion-cols">
+    <div class="fcol warli"><h3>Warli elements used</h3><ul>
+      <li>Geometric human figures built from triangles and circles</li>
+      <li>A circular community dance, echoing the tarpa dance</li>
+      <li>Simple earthy, monochrome figure language</li>
+      <li>Figures shown engaged in shared village activity</li>
+    </ul></div>
+    <div class="fcol kalam"><h3>Kalamkari-inspired elements used</h3><ul>
+      <li>Flowing botanical vine and floral motifs</li>
+      <li>Detailed, patterned leaf and petal linework</li>
+      <li>A decorative repeating border</li>
+      <li>Organic, hand-drawn-style outlines rather than geometric ones</li>
+    </ul></div>
+  </div>
+
+  <div class="rule"></div>
+  <div class="compare">
+    <div class="fcol"><h3>Similarities between the styles</h3><ul>
+      <li>Both are hand-worked traditions passed through community practice, not individual signed authorship</li>
+      <li>Both rely on line and repetition rather than tonal shading</li>
+      <li>Both use a restricted, earth-derived colour range</li>
+      <li>Both traditionally decorate a surface tied to ritual or domestic life — a wall or a textile</li>
+    </ul></div>
+    <div class="fcol"><h3>Differences between the styles</h3><ul>
+      <li>Warli figures are geometric and abstracted; Kalamkari motifs are organic and naturalistic</li>
+      <li>Warli is wall painting from Maharashtra's tribal belt; Kalamkari is textile art from Andhra Pradesh</li>
+      <li>Warli is typically monochrome (white on red-ochre); Kalamkari uses a fuller dyed palette</li>
+      <li>Warli depicts human/social scenes; Kalamkari centres on floral, narrative or mythological patterning</li>
+    </ul></div>
+  </div>
+</section>
+
+</main>
+
+<footer>Indian Art — Interactive Record</footer>
+<!-- About page kept as hidden placeholder for JS -->
+<section class="page" id="page-about" style="display:none;"></section>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <button class="close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+
 <style>
 :root{
   --bg:#f7f1e5; --bg-dark:#ebdcc4; --ink:#2f241b; --ink-soft:#5c4836;
